@@ -154,11 +154,10 @@ DBCStorage <SoundEntriesEntry> sSoundEntriesStore(SoundEntriesfmt);
 DBCStorage <SpellItemEnchantmentEntry> sSpellItemEnchantmentStore(SpellItemEnchantmentfmt);
 DBCStorage <SpellItemEnchantmentConditionEntry> sSpellItemEnchantmentConditionStore(SpellItemEnchantmentConditionfmt);
 DBCStorage <SpellEntry> sSpellStore(SpellEntryfmt);
-SpellCategoryStore sSpellsByCategoryStore;
+SpellCategoryStore sSpellCategoryStore;
 PetFamilySpellsStore sPetFamilySpellsStore;
 
 DBCStorage <SpellCastTimesEntry> sSpellCastTimesStore(SpellCastTimefmt);
-DBCStorage <SpellCategoryEntry> sSpellCategoryStore(SpellCategoryfmt);
 DBCStorage <SpellDifficultyEntry> sSpellDifficultyStore(SpellDifficultyfmt);
 DBCStorage <SpellDurationEntry> sSpellDurationStore(SpellDurationfmt);
 DBCStorage <SpellFocusObjectEntry> sSpellFocusObjectStore(SpellFocusObjectfmt);
@@ -409,7 +408,7 @@ void LoadDBCStores(const std::string& dataPath)
     {
         SpellEntry const* spell = sSpellStore.LookupEntry(i);
         if (spell && spell->Category)
-            sSpellsByCategoryStore[spell->Category].insert(i);
+            sSpellCategoryStore[spell->Category].insert(i);
     }
 
     for (uint32 j = 0; j < sSkillLineAbilityStore.GetNumRows(); ++j)
@@ -443,7 +442,6 @@ void LoadDBCStores(const std::string& dataPath)
     }
 
     LoadDBC(availableDbcLocales, bad_dbc_files, sSpellCastTimesStore,         dbcPath, "SpellCastTimes.dbc");
-    LoadDBC(availableDbcLocales, bad_dbc_files, sSpellCategoryStore,          dbcPath, "SpellCategory.dbc");
     LoadDBC(availableDbcLocales, bad_dbc_files, sSpellDifficultyStore,        dbcPath, "SpellDifficulty.dbc", &CustomSpellDifficultyfmt, &CustomSpellDifficultyIndex);
     LoadDBC(availableDbcLocales, bad_dbc_files, sSpellDurationStore,          dbcPath, "SpellDuration.dbc");
     LoadDBC(availableDbcLocales, bad_dbc_files, sSpellFocusObjectStore,       dbcPath, "SpellFocusObject.dbc");
